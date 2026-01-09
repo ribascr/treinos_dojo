@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./app
+    container_name: dojo_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: dojo_user
+      DB_PASSWORD: dojo_pass
+      DB_NAME: dojo_presencas
+    ports:
+      - "8080:8080"
+    networks:
+      - dojo_net
+
+  db:
+    image: mysql:8.0
+    container_name: dojo_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: dojo_presencas
+      MYSQL_USER: dojo_user
+      MYSQL_PASSWORD: dojo_pass
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - dojo_net
+
+  adminer:
+    image: adminer:latest
+    container_name: dojo_adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - dojo_net
+
+networks:
+  dojo_net:
+
+volumes:
+  mysql_data:
