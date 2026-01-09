@@ -12,14 +12,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip setuptools wheel
-   
+
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 
-RUN python manage.py collectstatic --noinput || echo "Sem static para coletar"
-
-EXPOSE 8080
+RUN python manage.py collectstatic --noinput
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "dojo_project.wsgi:application"]
