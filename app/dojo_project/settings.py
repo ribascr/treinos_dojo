@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "dojo_core.apps.CoreConfig",
+    "dojo_core",
 ]
 
 MIDDLEWARE = [
