@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block title %}Registrar Presença{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h3>Registrar presença</h3>
+    <p>Confirme para registrar sua presença na aula de hoje.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary btn-lg">Confirmar Presença</button>
+    </form>
+</div>
+{% endblock %}
