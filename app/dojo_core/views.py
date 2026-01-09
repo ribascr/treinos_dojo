@@ -53,7 +53,7 @@ def aluno_dashboard(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     presencas = aluno.presencas.order_by("-data_aula")[:10]
 
-    return render(request, "core/aluno_dashboard.html", {
+    return render(request, "dojo_core/aluno_dashboard.html", {
         "aluno": aluno,
         "presencas": presencas,
     })
@@ -73,6 +73,6 @@ def registrar_presenca_page(request, aluno_id):
         )
         return redirect("aluno-dashboard", aluno_id=aluno.id)
 
-    return render(request, "core/registrar_presenca.html", {
+    return render(request, "dojo_core/registrar_presenca.html", {
         "aluno": aluno
     })

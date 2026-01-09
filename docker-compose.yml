@@ -41,7 +41,7 @@ services:
       MYSQL_DATABASE: dojo_presencas
       MYSQL_USER: dojo_user
       MYSQL_PASSWORD: dojo_pass
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --ssl=0
     ports:
       - "3306:3306"
     volumes:
