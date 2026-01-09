@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% block title %}Área do Aluno{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h2>Olá, {{ aluno.nome }}</h2>
+    <p class="text-muted">Faixa atual: {{ aluno.faixa_atual }}</p>
+
+    <a href="{% url 'registrar-presenca' aluno.id %}" 
+       class="btn btn-success btn-lg mt-4">
+        Registrar Presença
+    </a>
+
+    <hr class="my-4">
+
+    <h4>Últimas presenças</h4>
+    <ul class="list-group">
+        {% for p in presencas %}
+        <li class="list-group-item">
+            {{ p.data_aula }} — {{ p.duracao_minutos }} min
+        </li>
+        {% empty %}
+        <li class="list-group-item">Nenhuma presença registrada ainda.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
