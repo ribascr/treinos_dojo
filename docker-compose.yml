@@ -32,6 +32,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./sql/banco.sql:/docker-entrypoint-initdb.d/banco.sql:ro
     networks:
       - dojo_net
 
