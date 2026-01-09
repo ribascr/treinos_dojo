@@ -20,3 +20,10 @@ urlpatterns = [
     path("", include(router.urls)),
     path("alunos/<int:aluno_pk>/registrar-presenca/", registrar_presenca, name="registrar-presenca"),
 ]
+from django.urls import path
+from .views import aluno_dashboard, registrar_presenca_page
+
+urlpatterns = [
+    path("aluno/<int:aluno_id>/", aluno_dashboard, name="aluno-dashboard"),
+    path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
+]
