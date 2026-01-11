@@ -23,7 +23,7 @@ services:
     container_name: dojo_nginx
     restart: always
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - static_volume:/app/staticfiles
@@ -55,7 +55,7 @@ services:
     container_name: dojo_adminer
     restart: always
     ports:
-      - "8081:8080"
+      - "8082:8080"
     networks:
       - dojo_net
 
