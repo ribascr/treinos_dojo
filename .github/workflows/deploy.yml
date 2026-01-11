@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
           script: |
-            cd /home/ubuntu/conteiners/treinos_dojo
+            cd /home/ubuntu/treinos_dojo
             git pull origin main
             docker compose up --build -d
 
