@@ -14,7 +14,7 @@ services:
       DB_PASSWORD: dojo_pass
       DB_NAME: dojo_presencas
     networks:
-      - dojo_net
+      - rede_compartilhada
     volumes:
       - static_volume:/app/staticfiles
 
@@ -30,7 +30,7 @@ services:
     depends_on:
       - app
     networks:
-      - dojo_net
+      - rede_compartilhada
 
   db:
     image: mysql:8.0
@@ -48,7 +48,7 @@ services:
       - mysql_data:/var/lib/mysql
       - ./sql/estrutura.sql:/docker-entrypoint-initdb.d/estrutura.sql:ro
     networks:
-      - dojo_net
+      - rede_compartilhada
 
   adminer:
     image: adminer:latest
@@ -57,10 +57,12 @@ services:
     ports:
       - "9082:8080"
     networks:
-      - dojo_net
+      - rede_compartilhada
 
 networks:
-  dojo_net:
+  rede_compartilhada:
+    driver: bridge
+    external: true
 
 volumes:
   mysql_data:
