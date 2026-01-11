@@ -23,5 +23,5 @@ jobs:
           script: |
             cd /home/ubuntu/treinos_dojo
             git pull origin main
-            docker compose pull
-            docker compose up -d
+            docker compose up --build -d
+
