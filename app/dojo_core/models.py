@@ -70,8 +70,21 @@ class Presenca(models.Model):
 
 class ExameGraduacao(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name="exames")
-    faixa_anterior = models.CharField(max_length=50, blank=True, null=True)
-    faixa_nova = models.CharField(max_length=50)
+    faixa_anterior = models.ForeignKey(
+        Faixa,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="exames_faixa_anterior"
+    )
+    faixa_nova = models.ForeignKey(
+        Faixa,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="exames_faixa_nova"
+    )
+
     data_exame = models.DateField()
     observacoes = models.TextField(blank=True, null=True)
     criado_em = models.DateTimeField(auto_now_add=True)
