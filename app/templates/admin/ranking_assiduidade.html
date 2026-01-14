@@ -16,7 +16,7 @@
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ aluno.nome }}</td>
-            <td>{{ aluno.total_horas }} h</td>
+            <td>{{ aluno.total_horas|floatformat:1 }} h</td>
         </tr>
         {% endfor %}
     </tbody>
