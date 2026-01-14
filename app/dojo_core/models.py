@@ -9,6 +9,15 @@ class ConfiguracaoDojo(models.Model):
     def __str__(self):
         return self.nome_dojo or "Configuração do dojo"
 
+class Faixa(models.Model):
+    nome = models.CharField(max_length=50)
+    ordem = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["ordem"]
+
+    def __str__(self):
+        return self.nome
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=150)
@@ -83,12 +92,4 @@ class AtividadeExtra(models.Model):
     def __str__(self):
         return f"{self.aluno.nome} - {self.tipo_atividade}"
 
-class Faixa(models.Model):
-    nome = models.CharField(max_length=50)
-    ordem = models.PositiveIntegerField(default=0)
 
-    class Meta:
-        ordering = ["ordem"]
-
-    def __str__(self):
-        return self.nome
