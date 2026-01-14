@@ -3,7 +3,7 @@ from django.template.response import TemplateResponse
 from dojo_core import views_admin
 from django.contrib import admin
 from django.shortcuts import render
-from django.db.models import Sum, Count, F, ExpressionWrapper, FloatField, ExpressionWrapper
+from django.db.models import Sum, Count, F, ExpressionWrapper, FloatField, ExpressionWrapper, Q
 from dojo_core.models import Aluno, Presenca
 
 def ranking_assiduidade(request):
@@ -25,8 +25,14 @@ def ranking_assiduidade(request):
     ranking = (
         Aluno.objects
         .annotate(
-            total_minutos=Sum("presencas__duracao_minutos", filter=presencas.filter(aluno=F("id"))),
-            total_presencas=Count("presencas", filter=presencas.filter(aluno=F("id")))
+            total_minutos=Sum(
+                "presencas__duracao_minutos",
+                filter=Q(presencas__in=presencas)
+            ),
+            total_presencas=Count(
+                "presencas",
+                filter=Q(presencas__in=presencas)
+            )
         )
         .annotate(
             porcentagem=ExpressionWrapper(
@@ -37,7 +43,6 @@ def ranking_assiduidade(request):
         .order_by("-total_minutos")
     )
 
-    # Dados para o gráfico
     labels = [aluno.nome for aluno in ranking]
     horas = [(aluno.total_minutos or 0) / 60 for aluno in ranking]
     porcentagens = [aluno.porcentagem or 0 for aluno in ranking]
