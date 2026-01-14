@@ -92,4 +92,11 @@ class AtividadeExtra(models.Model):
     def __str__(self):
         return f"{self.aluno.nome} - {self.tipo_atividade}"
 
+class Relatorios(models.Model):
+    class Meta:
+        managed = False
+        verbose_name = "Relatório"
+        verbose_name_plural = "Relatórios"
 
+    def __str__(self):
+        return "Relatórios"
