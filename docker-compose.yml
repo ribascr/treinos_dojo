@@ -6,8 +6,8 @@ services:
     container_name: dojo_app
     restart: always
     depends_on:
-      - db
-          condition: service_healthy
+      db
+        condition: service_healthy
     environment:
       DB_HOST: db
       DB_PORT: 3306
