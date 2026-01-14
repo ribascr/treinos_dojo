@@ -19,10 +19,11 @@ router.register(r"atividades-extras", AtividadeExtraViewSet, basename="atividade
 registrar_presenca = RegistrarPresencaViewSet.as_view({"post": "create"})
 
 urlpatterns = [
+    # API
     path("", include(router.urls)),
     path("alunos/<int:aluno_pk>/registrar-presenca/", registrar_presenca, name="registrar-presenca-api"),
 
-    # Páginas HTML
+    # HTML
     path("aluno/<int:aluno_id>/", aluno_dashboard, name="aluno-dashboard"),
-    path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca-page"),
+    path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
 ]
