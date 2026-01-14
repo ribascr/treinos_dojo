@@ -92,6 +92,11 @@ def relatorios_view(request):
     return TemplateResponse(request, "admin/relatorios.html", context)
 
 # Adiciona a rota ao admin
-admin.site.get_urls = lambda: [
-    path("relatorios/", relatorios_view, name="relatorios"),
-] + admin.site.get_urls()
+def get_admin_urls():
+    urls = admin.site.get_urls()
+    custom_urls = [
+        path("relatorios/", relatorios_view, name="relatorios"),
+    ]
+    return custom_urls + urls
+
+admin.site.get_urls = get_admin_urls
