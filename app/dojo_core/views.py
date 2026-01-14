@@ -1,16 +1,30 @@
 from django.contrib import messages
+from django.db import models
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.timezone import now
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from django.utils.timezone import now
-from .models import Aluno, Presenca, ExameGraduacao, AtividadeExtra, ConfiguracaoDojo
+
+from .models import (
+    Aluno,
+    Presenca,
+    ExameGraduacao,
+    AtividadeExtra,
+    ConfiguracaoDojo,
+)
+
 from .serializers import (
     AlunoSerializer,
     PresencaSerializer,
     ExameGraduacaoSerializer,
     AtividadeExtraSerializer,
 )
-from app.dojo_core import models
-from app.dojo_core import models
+
+
+# -----------------------------
+# API VIEWSETS
+# -----------------------------
 
 class AlunoViewSet(viewsets.ModelViewSet):
     queryset = Aluno.objects.all()
@@ -39,27 +53,36 @@ class RegistrarPresencaViewSet(viewsets.ViewSet):
         except Aluno.DoesNotExist:
             return Response({"detail": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
+        hoje = now().date()
+
+        # Impede duplicidade via API
+        if Presenca.objects.filter(aluno=aluno, data_aula=hoje).exists():
+            return Response(
+                {"detail": "A presença de hoje já foi registrada."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         config = ConfiguracaoDojo.objects.first()
         duracao = config.duracao_aula_minutos if config else 75
 
         presenca = Presenca.objects.create(
             aluno=aluno,
-            data_aula=now().date(),
+            data_aula=hoje,
             duracao_minutos=duracao,
         )
+
         return Response(PresencaSerializer(presenca).data, status=status.HTTP_201_CREATED)
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Aluno, Presenca, ConfiguracaoDojo
-from django.utils.timezone import now
+
+
+# -----------------------------
+# HTML VIEWS
+# -----------------------------
 
 def aluno_dashboard(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     presencas = aluno.presencas.order_by("-data_aula")[:10]
 
-    # Soma total de minutos treinados
     total_minutos = aluno.presencas.aggregate(total=models.Sum("duracao_minutos"))["total"] or 0
-
-    # Converte para horas
     total_horas = round(total_minutos / 60, 2)
 
     return render(request, "dojo_core/aluno_dashboard.html", {
@@ -71,19 +94,16 @@ def aluno_dashboard(request, aluno_id):
 
 def registrar_presenca_page(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    hoje = now().date() 
+    hoje = now().date()
 
     if request.method == "POST":
-        # Verifica se já existe presença registrada hoje
         if Presenca.objects.filter(aluno=aluno, data_aula=hoje).exists():
             messages.error(request, "A presença de hoje já foi registrada.")
             return redirect("aluno-dashboard", aluno_id=aluno.id)
 
-        # Obtém duração da aula
         config = ConfiguracaoDojo.objects.first()
         duracao = config.duracao_aula_minutos if config else 75
 
-        # Cria a presença
         Presenca.objects.create(
             aluno=aluno,
             data_aula=hoje,
@@ -96,4 +116,3 @@ def registrar_presenca_page(request, aluno_id):
     return render(request, "dojo_core/registrar_presenca.html", {
         "aluno": aluno
     })
-
