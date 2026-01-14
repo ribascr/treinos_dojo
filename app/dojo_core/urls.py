@@ -1,4 +1,5 @@
 from django.urls import path, include
+from dojo_core.views_admin import relatorios_home
 from . import views
 from rest_framework.routers import DefaultRouter
 from .views import (
@@ -27,5 +28,6 @@ urlpatterns = [
     # HTML
     path("aluno/<int:aluno_id>/", aluno_dashboard, name="aluno-dashboard"),
     path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
-    path("ranking/", views.ranking_assiduidade, name="ranking-assiduidade"),
+    path("admin/relatorios/", relatorios_home, name="admin-relatorios"),
+    path("admin/", admin.site.urls),
 ]
