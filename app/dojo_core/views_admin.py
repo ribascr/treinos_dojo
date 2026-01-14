@@ -3,13 +3,15 @@ from django.template.response import TemplateResponse
 from dojo_core import views_admin
 from django.contrib import admin
 from django.shortcuts import render
-from django.db.models import Sum
+from django.db.models import Sum, F, ExpressionWrapper, FloatField
+
 from dojo_core.models import Aluno
 
 def ranking_assiduidade(request):
     ranking = (
         Aluno.objects
         .annotate(total_minutos=Sum("presencas__duracao_minutos"))
+        .annotate(total_horas=ExpressionWrapper(F("total_minutos") / 60, output_field=FloatField()))
         .order_by("-total_minutos")
     )
 
