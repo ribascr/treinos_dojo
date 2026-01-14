@@ -84,9 +84,6 @@ class RelatoriosAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-
-admin.site.register(type("Relatorios", (), {}), RelatoriosAdmin)
-
 @admin.register(Relatorios)
 class RelatoriosAdmin(admin.ModelAdmin):
     change_list_template = "admin/relatorios_changelist.html"
