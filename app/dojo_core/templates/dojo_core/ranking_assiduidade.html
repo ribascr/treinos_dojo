@@ -1,0 +1,24 @@
+{% extends "dojo_core/base.html" %}
+
+{% block content %}
+<h2>Ranking de Assiduidade</h2>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Posição</th>
+            <th>Aluno</th>
+            <th>Horas Treinadas</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aluno in ranking %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.total_horas }} h</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

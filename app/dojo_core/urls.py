@@ -26,4 +26,5 @@ urlpatterns = [
     # HTML
     path("aluno/<int:aluno_id>/", aluno_dashboard, name="aluno-dashboard"),
     path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
+    path("ranking/", ranking_assiduidade, name="ranking-assiduidade"),
 ]

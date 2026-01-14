@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Sum
 from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
@@ -115,4 +116,18 @@ def registrar_presenca_page(request, aluno_id):
 
     return render(request, "dojo_core/registrar_presenca.html", {
         "aluno": aluno
+    })
+def ranking_assiduidade(request):
+    ranking = (
+        Aluno.objects
+        .annotate(total_minutos=Sum("presencas__duracao_minutos"))
+        .order_by("-total_minutos")
+    )
+
+    # Converte minutos para horas
+    for aluno in ranking:
+        aluno.total_horas = round((aluno.total_minutos or 0) / 60, 2)
+
+    return render(request, "dojo_core/ranking_assiduidade.html", {
+        "ranking": ranking
     })
