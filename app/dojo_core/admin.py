@@ -72,31 +72,3 @@ class AtividadeExtraAdmin(admin.ModelAdmin):
 class FaixaAdmin(admin.ModelAdmin):
     list_display = ("nome", "ordem")
     ordering = ("ordem",)
-
-class RelatoriosAdmin(admin.ModelAdmin):
-    change_list_template = "admin/relatorios_changelist.html"
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
-def relatorios_view(request):
-    context = {
-        **admin.site.each_context(request),
-    }
-    return TemplateResponse(request, "admin/relatorios.html", context)
-
-# Adiciona a rota ao admin
-def get_admin_urls():
-    urls = admin.site.get_urls()
-    custom_urls = [
-        path("relatorios/", relatorios_view, name="relatorios"),
-    ]
-    return custom_urls + urls
-
-admin.site.get_urls = get_admin_urls
