@@ -16,7 +16,13 @@ class Aluno(models.Model):
     telefone = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     data_cadastro = models.DateField(auto_now_add=True)
-    faixa_atual = models.CharField(max_length=50, blank=True, null=True)
+    faixa_atual = models.ForeignKey(
+    Faixa,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name="alunos"
+)
     observacoes = models.TextField(blank=True, null=True)
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now_add=True)
@@ -76,3 +82,13 @@ class AtividadeExtra(models.Model):
 
     def __str__(self):
         return f"{self.aluno.nome} - {self.tipo_atividade}"
+
+class Faixa(models.Model):
+    nome = models.CharField(max_length=50)
+    ordem = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["ordem"]
+
+    def __str__(self):
+        return self.nome

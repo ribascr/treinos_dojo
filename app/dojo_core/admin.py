@@ -9,6 +9,7 @@ from .models import (
     Presenca,
     ExameGraduacao,
     AtividadeExtra,
+    Faixa,
 )
 
 @admin.register(ConfiguracaoDojo)
@@ -62,3 +63,8 @@ class AtividadeExtraAdmin(admin.ModelAdmin):
     list_filter = ("tipo_atividade", "data_inicio")
     search_fields = ("aluno__nome",)
     ordering = ("-data_inicio",)
+
+@admin.register(Faixa)
+class FaixaAdmin(admin.ModelAdmin):
+    list_display = ("nome", "ordem")
+    ordering = ("ordem",)
