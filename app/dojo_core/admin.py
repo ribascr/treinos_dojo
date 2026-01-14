@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import path
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import format_html
 from .models import Relatorios
@@ -84,15 +86,13 @@ class RelatoriosAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-@admin.register(Relatorios)
-class RelatoriosAdmin(admin.ModelAdmin):
-    change_list_template = "admin/relatorios_changelist.html"
+def relatorios_view(request):
+    context = {
+        **admin.site.each_context(request),
+    }
+    return TemplateResponse(request, "admin/relatorios.html", context)
 
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
+# Adiciona a rota ao admin
+admin.site.get_urls = lambda: [
+    path("relatorios/", relatorios_view, name="relatorios"),
+] + admin.site.get_urls()
