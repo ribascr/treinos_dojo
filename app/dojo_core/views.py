@@ -63,16 +63,26 @@ def registrar_presenca_page(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
 
     if request.method == "POST":
+        # Verifica se já existe presença registrada hoje
+        if Presenca.objects.filter(aluno=aluno, data_aula=hoje).exists():
+            messages.error(request, "A presença de hoje já foi registrada.")
+            return redirect("aluno-dashboard", aluno_id=aluno.id)
+
+        # Obtém duração da aula
         config = ConfiguracaoDojo.objects.first()
         duracao = config.duracao_aula_minutos if config else 75
 
+        # Cria a presença
         Presenca.objects.create(
             aluno=aluno,
-            data_aula=now().date(),
+            data_aula=hoje,
             duracao_minutos=duracao,
         )
+
+        messages.success(request, "Presença registrada com sucesso.")
         return redirect("aluno-dashboard", aluno_id=aluno.id)
 
     return render(request, "dojo_core/registrar_presenca.html", {
         "aluno": aluno
     })
+
