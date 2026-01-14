@@ -4,13 +4,13 @@ from dojo_core import views_admin
 from django.contrib import admin
 from django.shortcuts import render
 from django.db.models import Sum
-from dojo_core.models import Aluno, Presenca
+from dojo_core.models import Aluno
 
 def ranking_assiduidade(request):
     ranking = (
         Aluno.objects
-        .annotate(horas_treinadas=Sum("presencas__duracao"))
-        .order_by("-horas_treinadas")
+        .annotate(total_minutos=Sum("presencas__duracao_minutos"))
+        .order_by("-total_minutos")
     )
 
     return render(
