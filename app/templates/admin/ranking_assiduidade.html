@@ -1,14 +1,25 @@
-{% extends "dojo_core/base.html" %}
+<h1>Ranking de Assiduidade</h1>
 
-{% block content %}
-<h2>Ranking de Assiduidade</h2>
+<form method="get">
+    <label>Ano:</label>
+    <input type="number" name="ano" value="{{ ano }}" placeholder="2025">
 
-<table class="table table-striped mt-3">
+    <label>Mês:</label>
+    <input type="number" name="mes" value="{{ mes }}" placeholder="1 a 12">
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<br>
+
+<table border="1" cellpadding="6">
     <thead>
         <tr>
             <th>Posição</th>
             <th>Aluno</th>
             <th>Horas Treinadas</th>
+            <th>Presenças</th>
+            <th>% Presença</th>
         </tr>
     </thead>
     <tbody>
@@ -16,9 +27,50 @@
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ aluno.nome }}</td>
-            <td>{{ aluno.total_horas|floatformat:1 }} h</td>
+            <td>
+                {% if aluno.total_minutos %}
+                    {{ aluno.total_minutos|floatformat:0|divisibleby:60 }}
+                {% else %}
+                    0
+                {% endif %}
+            </td>
+            <td>{{ aluno.total_presencas|default:0 }}</td>
+            <td>{{ aluno.porcentagem|floatformat:1 }}%</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhum dado encontrado</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-{% endblock %}
+<h2>Gráfico de Horas Treinadas</h2>
+
+<canvas id="graficoHoras" width="400" height="150"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('graficoHoras');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Horas Treinadas',
+                data: {{ horas|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
