@@ -9,7 +9,7 @@ from dojo_core.models import Aluno, Presenca
 def ranking_assiduidade(request):
     ranking = (
         Aluno.objects
-        .annotate(horas_treinadas=Sum("presenca__duracao"))
+        .annotate(horas_treinadas=Sum("presencas__duracao"))
         .order_by("-horas_treinadas")
     )
 
