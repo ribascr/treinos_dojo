@@ -61,6 +61,7 @@ def aluno_dashboard(request, aluno_id):
 
 def registrar_presenca_page(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
+    hoje = now().date() 
 
     if request.method == "POST":
         # Verifica se já existe presença registrada hoje
