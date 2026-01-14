@@ -6,7 +6,7 @@ services:
     container_name: dojo_app
     restart: always
     depends_on:
-      - db
+      - dbdojo
 #        condition: service_healthy
     environment:
       DB_HOST: db
@@ -33,7 +33,7 @@ services:
     networks:
       - rede_compartilhada
 
-  db:
+  dbdojo:
     image: mysql:8.0
     container_name: dojo_mysql
     restart: always
