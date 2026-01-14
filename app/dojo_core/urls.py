@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.contrib import admin
 from dojo_core.views_admin import relatorios_home
 from . import views
 from rest_framework.routers import DefaultRouter
