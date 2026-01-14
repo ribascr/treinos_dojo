@@ -6,7 +6,7 @@ services:
     container_name: dojo_app
     restart: always
     depends_on:
-      db
+      - db
 #        condition: service_healthy
     environment:
       DB_HOST: db
