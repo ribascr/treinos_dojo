@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
+from .models import Relatorios
 admin.site.site_header = "Painel Administrativo do Dojo"
 admin.site.site_title = "Administração do Dojo"
 admin.site.index_title = "Bem-vindo ao Painel do Dojo"
@@ -85,3 +86,16 @@ class RelatoriosAdmin(admin.ModelAdmin):
 
 
 admin.site.register(type("Relatorios", (), {}), RelatoriosAdmin)
+
+@admin.register(Relatorios)
+class RelatoriosAdmin(admin.ModelAdmin):
+    change_list_template = "admin/relatorios_changelist.html"
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
