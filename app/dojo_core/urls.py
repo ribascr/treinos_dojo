@@ -6,6 +6,8 @@ from .views import (
     ExameGraduacaoViewSet,
     AtividadeExtraViewSet,
     RegistrarPresencaViewSet,
+    aluno_dashboard,
+    registrar_presenca_page,
 )
 
 router = DefaultRouter()
@@ -18,12 +20,9 @@ registrar_presenca = RegistrarPresencaViewSet.as_view({"post": "create"})
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("alunos/<int:aluno_pk>/registrar-presenca/", registrar_presenca, name="registrar-presenca"),
-]
-from django.urls import path
-from .views import aluno_dashboard, registrar_presenca_page
+    path("alunos/<int:aluno_pk>/registrar-presenca/", registrar_presenca, name="registrar-presenca-api"),
 
-urlpatterns = [
+    # Páginas HTML
     path("aluno/<int:aluno_id>/", aluno_dashboard, name="aluno-dashboard"),
-    path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
+    path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca-page"),
 ]
