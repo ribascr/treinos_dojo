@@ -1,4 +1,7 @@
 from django.contrib import admin
+admin.site.site_header = "Painel Administrativo do Dojo"
+admin.site.site_title = "Administração do Dojo"
+admin.site.index_title = "Bem-vindo ao Painel do Dojo"
 from .models import (
     ConfiguracaoDojo,
     Aluno,
