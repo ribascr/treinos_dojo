@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib import messages
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -9,6 +10,8 @@ from .serializers import (
     ExameGraduacaoSerializer,
     AtividadeExtraSerializer,
 )
+from app.dojo_core import models
+from app.dojo_core import models
 
 class AlunoViewSet(viewsets.ModelViewSet):
     queryset = Aluno.objects.all()
@@ -53,6 +56,12 @@ from django.utils.timezone import now
 def aluno_dashboard(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     presencas = aluno.presencas.order_by("-data_aula")[:10]
+
+    # Soma total de minutos treinados
+    total_minutos = aluno.presencas.aggregate(total=models.Sum("duracao_minutos"))["total"] or 0
+
+    # Converte para horas
+    total_horas = round(total_minutos / 60, 2)
 
     return render(request, "dojo_core/aluno_dashboard.html", {
         "aluno": aluno,
