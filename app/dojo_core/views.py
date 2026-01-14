@@ -66,6 +66,7 @@ def aluno_dashboard(request, aluno_id):
     return render(request, "dojo_core/aluno_dashboard.html", {
         "aluno": aluno,
         "presencas": presencas,
+        "total_horas": total_horas,
     })
 
 
