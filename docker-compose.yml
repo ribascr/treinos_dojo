@@ -9,7 +9,7 @@ services:
       - dbdojo
 #        condition: service_healthy
     environment:
-      DB_HOST: db
+      DB_HOST: dbdojo
       DB_PORT: 3306
       DB_USER: dojo_user
       DB_PASSWORD: dojo_pass
