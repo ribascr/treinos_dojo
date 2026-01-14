@@ -31,4 +31,9 @@ urlpatterns = [
     path("aluno/<int:aluno_id>/registrar/", registrar_presenca_page, name="registrar-presenca"),
     path("admin/relatorios/", relatorios_home, name="admin-relatorios"),
     path("admin/", admin.site.urls),
+    path(
+    "admin/relatorios/ranking-assiduidade/",
+    views.ranking_assiduidade,
+    name="ranking-assiduidade"
+)
 ]
