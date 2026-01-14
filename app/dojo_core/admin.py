@@ -3,7 +3,6 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import format_html
-from .models import Relatorios
 admin.site.site_header = "Painel Administrativo do Dojo"
 admin.site.site_title = "Administração do Dojo"
 admin.site.index_title = "Bem-vindo ao Painel do Dojo"
