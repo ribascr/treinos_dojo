@@ -3,9 +3,21 @@ from django.template.response import TemplateResponse
 from dojo_core import views_admin
 from django.contrib import admin
 from django.shortcuts import render
+from django.db.models import Sum
+from dojo_core.models import Aluno, Presenca
 
 def ranking_assiduidade(request):
-    return render(request, "admin/ranking_assiduidade.html")
+    ranking = (
+        Aluno.objects
+        .annotate(horas_treinadas=Sum("presenca__duracao"))
+        .order_by("-horas_treinadas")
+    )
+
+    return render(
+        request,
+        "admin/ranking_assiduidade.html",
+        {"ranking": ranking}
+    )
 
 @staff_member_required
 def relatorios_home(request):
