@@ -4,7 +4,6 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import format_html
 from django.contrib.auth import views as auth_views
-from .models import RelatorioFake
 
 
 admin.site.site_header = "Painel Administrativo do Dojo"
@@ -77,17 +76,3 @@ class FaixaAdmin(admin.ModelAdmin):
     list_display = ("nome", "ordem")
     ordering = ("ordem",)
 
-@admin.register(RelatorioFake)
-class RelatorioAdmin(admin.ModelAdmin):
-    def changelist_view(self, request, extra_context=None):
-        url = reverse("admin-relatorios")
-        return admin.redirects.redirect(url)
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return False
