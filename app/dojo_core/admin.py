@@ -3,6 +3,8 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import format_html
+from django.contrib.auth import views as auth_views
+
 admin.site.site_header = "Painel Administrativo do Dojo"
 admin.site.site_title = "Administração do Dojo"
 admin.site.index_title = "Bem-vindo ao Painel do Dojo"
@@ -72,3 +74,13 @@ class AtividadeExtraAdmin(admin.ModelAdmin):
 class FaixaAdmin(admin.ModelAdmin):
     list_display = ("nome", "ordem")
     ordering = ("ordem",)
+
+class MeuAdminSite(admin.AdminSite):
+    site_header = "Painel Administrativo"
+    site_title = "Admin"
+    index_title = "Bem-vindo ao painel"
+
+    # Aqui você aponta para um template customizado
+    login_template = "admin/login.html"
+
+admin_site = MeuAdminSite(name="meu_admin")
