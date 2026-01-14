@@ -1,5 +1,4 @@
 from django.contrib import admin
-from dojo_core.admin import admin_site
 from django.urls import path, include
 from dojo_core.views_admin import relatorios_home
 

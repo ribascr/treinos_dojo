@@ -75,12 +75,3 @@ class FaixaAdmin(admin.ModelAdmin):
     list_display = ("nome", "ordem")
     ordering = ("ordem",)
 
-class MeuAdminSite(admin.AdminSite):
-    site_header = "Painel Administrativo"
-    site_title = "Admin"
-    index_title = "Bem-vindo ao painel"
-
-    # Aqui você aponta para um template customizado
-    login_template = "admin/login.html"
-
-admin_site = MeuAdminSite(name="meu_admin")
