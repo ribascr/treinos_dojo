@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class ConfiguracaoDojo(models.Model):
     nome_dojo = models.CharField(max_length=150, blank=True, null=True)
@@ -20,6 +22,7 @@ class Faixa(models.Model):
         return self.nome
 
 class Aluno(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     nome = models.CharField(max_length=150)
     data_nascimento = models.DateField(blank=True, null=True)
     telefone = models.CharField(max_length=20, blank=True, null=True)
