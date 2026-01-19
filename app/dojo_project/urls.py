@@ -8,4 +8,5 @@ urlpatterns = [
     path("admin/relatorios/ranking-assiduidade/", views_admin.ranking_assiduidade, name="ranking-assiduidade"),
     path("", include("dojo_core.urls")),
     path("admin/", admin.site.urls),   
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
