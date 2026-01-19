@@ -11,4 +11,5 @@ urlpatterns = [
     path("", include("dojo_core.urls")),
     path("admin/", admin.site.urls),   
     path('accounts/login/', MeuLoginView.as_view(), name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
