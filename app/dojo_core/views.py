@@ -29,7 +29,11 @@ from .serializers import (
 class MeuLoginView(LoginView):
     def get_success_url(self):
         user = self.request.user
-        return f'/aluno/{user.id}/'
+        aluno = Aluno.objects.filter(user=user).first()
+        if aluno:
+            return f'/aluno/{aluno.id}/'
+        return '/'
+
 
 # -----------------------------
 # API VIEWSETS
