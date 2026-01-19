@@ -4,6 +4,9 @@ from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -23,6 +26,10 @@ from .serializers import (
     AtividadeExtraSerializer,
 )
 
+class MeuLoginView(LoginView):
+    def get_success_url(self):
+        user = self.request.user
+        return f'/aluno/{user.id}/'
 
 # -----------------------------
 # API VIEWSETS
