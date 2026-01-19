@@ -43,23 +43,6 @@ class Aluno(models.Model):
         return self.nome
 
 
-class Usuario(models.Model):
-    TIPOS = (
-        ("ADMIN", "Administrador"),
-        ("ALUNO", "Aluno"),
-    )
-    nome = models.CharField(max_length=150)
-    email = models.EmailField(unique=True)
-    senha_hash = models.CharField(max_length=255)
-    tipo = models.CharField(max_length=10, choices=TIPOS, default="ALUNO")
-    aluno = models.ForeignKey(Aluno, on_delete=models.SET_NULL, null=True, blank=True)
-    criado_em = models.DateTimeField(auto_now_add=True)
-    atualizado_em = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.nome
-
-
 class Presenca(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name="presencas")
     data_aula = models.DateField()

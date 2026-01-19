@@ -33,14 +33,6 @@ class AlunoAdmin(admin.ModelAdmin):
     ordering = ("nome",)
 
 
-@admin.register(Usuario)
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ("id", "nome", "email", "tipo", "aluno", "criado_em")
-    search_fields = ("nome", "email")
-    list_filter = ("tipo",)
-    ordering = ("nome",)
-
-
 @admin.register(Presenca)
 class PresencaAdmin(admin.ModelAdmin):
     list_display = ("id", "aluno", "data_aula", "duracao_minutos", "tipo_aula")
