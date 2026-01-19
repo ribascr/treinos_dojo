@@ -3,6 +3,7 @@ from django.db.models import Sum
 from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -79,6 +80,7 @@ class RegistrarPresencaViewSet(viewsets.ViewSet):
 # HTML VIEWS
 # -----------------------------
 
+@login_required
 def aluno_dashboard(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     presencas = aluno.presencas.order_by("-data_aula")[:10]
@@ -92,7 +94,7 @@ def aluno_dashboard(request, aluno_id):
         "total_horas": total_horas,
     })
 
-
+@login_required
 def registrar_presenca_page(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     hoje = now().date()
