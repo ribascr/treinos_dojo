@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class ConfiguracaoDojo(models.Model):
     nome_dojo = models.CharField(max_length=150, blank=True, null=True)
     duracao_aula_minutos = models.IntegerField(default=75)

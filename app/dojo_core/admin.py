@@ -12,7 +12,6 @@ admin.site.index_title = "Bem-vindo ao Painel do Dojo"
 from .models import (
     ConfiguracaoDojo,
     Aluno,
-    Usuario,
     Presenca,
     ExameGraduacao,
     AtividadeExtra,
