@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from dojo_core import views_admin
 from dojo_core.views_admin import relatorios_home
-from .views import MeuLoginView
+from dojo_core.views import MeuLoginView
+
 
 urlpatterns = [
     path("admin/relatorios/", relatorios_home, name="admin-relatorios"),
