@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Alunos por Faixa</h1>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Faixa</th>
+            <th>Total de Alunos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in dados %}
+        <tr>
+            <td>{{ item.faixa }}</td>
+            <td>{{ item.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<canvas id="graficoFaixas" class="mt-5"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('graficoFaixas');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+            label: 'Quantidade de alunos',
+            data: {{ totais|safe }},
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        }]
+    }
+});
+</script>
+
+{% endblock %}

@@ -106,6 +106,29 @@ def relatorio_horas_treinadas(request):
     )
 
 @staff_member_required
+def relatorio_alunos_por_faixa(request):
+    dados = (
+        Aluno.objects
+        .values("faixa")
+        .annotate(total=Count("id"))
+        .order_by("faixa")
+    )
+
+    labels = [item["faixa"] for item in dados]
+    totais = [item["total"] for item in dados]
+
+    return render(
+        request,
+        "admin/relatorio_alunos_por_faixa.html",
+        {
+            "dados": dados,
+            "labels": labels,
+            "totais": totais,
+        }
+    )
+
+
+@staff_member_required
 def relatorios_home(request):
     context = {
         **admin.site.each_context(request),
