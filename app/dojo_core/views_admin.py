@@ -127,6 +127,23 @@ def relatorio_alunos_por_faixa(request):
         }
     )
 
+@staff_member_required
+def relatorio_lista_alunos_faixa(request):
+
+    alunos = (
+        Aluno.objects
+        .select_related("faixa_atual")
+        .order_by("faixa_atual__ordem", "nome")
+    )
+
+    return render(
+        request,
+        "admin/relatorio_lista_alunos_faixa.html",
+        {
+            "alunos": alunos,
+        }
+    )
+
 
 @staff_member_required
 def relatorios_home(request):

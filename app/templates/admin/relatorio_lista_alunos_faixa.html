@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Lista de Alunos e Suas Faixas</h1>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Aluno</th>
+            <th>Faixa Atual</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aluno in alunos %}
+        <tr>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.faixa_atual.nome }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
