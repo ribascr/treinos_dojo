@@ -8,6 +8,7 @@ from dojo_core.views import MeuLoginView
 urlpatterns = [
     path("admin/relatorios/", relatorios_home, name="admin-relatorios"),
     path("admin/relatorios/ranking-assiduidade/", views_admin.ranking_assiduidade, name="ranking-assiduidade"),
+    path("relatorios/horas-treinadas/", views_admin.relatorio_horas_treinadas, name="relatorio-horas-treinadas"),
     path("", include("dojo_core.urls")),
     path("admin/", admin.site.urls),   
     path('accounts/login/', MeuLoginView.as_view(), name='login'),
