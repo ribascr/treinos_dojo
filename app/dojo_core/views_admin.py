@@ -109,12 +109,12 @@ def relatorio_horas_treinadas(request):
 def relatorio_alunos_por_faixa(request):
     dados = (
         Aluno.objects
-        .values("faixa")
+        .values(""faixa_atual__nome"")
         .annotate(total=Count("id"))
-        .order_by("faixa")
+        .order_by(""faixa_atual__nome"")
     )
 
-    labels = [item["faixa"] for item in dados]
+    labels = [item[""faixa_atual__nome""] for item in dados]
     totais = [item["total"] for item in dados]
 
     return render(
