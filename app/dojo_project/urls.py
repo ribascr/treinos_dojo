@@ -9,6 +9,9 @@ urlpatterns = [
     path("admin/relatorios/", relatorios_home, name="admin-relatorios"),
     path("admin/relatorios/ranking-assiduidade/", views_admin.ranking_assiduidade, name="ranking-assiduidade"),
     path("relatorios/horas-treinadas/", views_admin.relatorio_horas_treinadas, name="relatorio-horas-treinadas"),
+    path("relatorios/alunos-por-faixa/",views_admin.relatorio_alunos_por_faixa, name="relatorio-alunos-por-faixa"),
+),
+
     path("", include("dojo_core.urls")),
     path("admin/", admin.site.urls),   
     path('accounts/login/', MeuLoginView.as_view(), name='login'),
