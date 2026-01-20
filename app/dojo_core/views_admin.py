@@ -111,7 +111,7 @@ def relatorio_alunos_por_faixa(request):
         Aluno.objects
         .values("faixa_atual__nome")
         .annotate(total=Count("id"))
-        .order_by("faixa_atual__nome")
+        .order_by("faixa_atual__ordem")
     )
 
     labels = [item["faixa_atual__nome"] for item in dados]
