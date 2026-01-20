@@ -61,6 +61,51 @@ def ranking_assiduidade(request):
     )
 
 @staff_member_required
+def relatorio_horas_treinadas(request):
+    ano = request.GET.get("ano")
+    mes = request.GET.get("mes")
+
+    presencas = Presenca.objects.all()
+
+    if ano:
+        presencas = presencas.filter(data_aula__year=ano)
+
+    if mes:
+        presencas = presencas.filter(data_aula__month=mes)
+
+    ranking = (
+        Aluno.objects
+        .annotate(
+            total_minutos=Sum(
+                "presencas__duracao_minutos",
+                filter=Q(presencas__in=presencas)
+            )
+        )
+        .annotate(
+            total_horas=ExpressionWrapper(
+                F("total_minutos") / 60.0,
+                output_field=FloatField()
+            )
+        )
+        .order_by("-total_horas")
+    )
+
+    labels = [aluno.nome for aluno in ranking]
+    horas = [aluno.total_horas or 0 for aluno in ranking]
+
+    return render(
+        request,
+        "admin/relatorio_horas_treinadas.html",
+        {
+            "ranking": ranking,
+            "ano": ano,
+            "mes": mes,
+            "labels": labels,
+            "horas": horas,
+        }
+    )
+
+@staff_member_required
 def relatorios_home(request):
     context = {
         **admin.site.each_context(request),

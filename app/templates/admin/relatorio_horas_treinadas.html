@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Horas Treinadas por Aluno</h1>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Ano</label>
+        <input type="number" name="ano" class="form-control" value="{{ ano }}">
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Mês</label>
+        <input type="number" name="mes" class="form-control" value="{{ mes }}">
+    </div>
+
+    <div class="col-md-3 align-self-end">
+        <button class="btn btn-primary w-100">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Aluno</th>
+            <th>Total de Horas</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aluno in ranking %}
+        <tr>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.total_horas|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
