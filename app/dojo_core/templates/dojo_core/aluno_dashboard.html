@@ -1,5 +1,9 @@
 {% extends "dojo_core/base.html" %}
 
+{% block title %}Área do Aluno{% endblock %}
+
+{% block content %}
+
 {% if user.is_authenticated %}
   <div style="margin-bottom: 20px;">
     Bem-vindo(a), {{ user.get_username }}.
@@ -9,9 +13,6 @@
   </div>
 {% endif %}
 
-{% block title %}Área do Aluno{% endblock %}
-
-{% block content %}
 <div class="text-center">
     <h2>Olá, {{ aluno.nome }}</h2>
     <p class="text-primary">
