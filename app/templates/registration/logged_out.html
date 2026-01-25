@@ -1,0 +1,12 @@
+{% extends "dojo_core/base.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h2>Sessão encerrada</h2>
+    <p>Você saiu da sua conta com sucesso.</p>
+
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">
+        Acessar novamente
+    </a>
+</div>
+{% endblock %}
