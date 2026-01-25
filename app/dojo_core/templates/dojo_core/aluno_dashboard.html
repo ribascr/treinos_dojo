@@ -8,9 +8,15 @@
   <div class="text-end mb-3">
     Bem-vindo(a), {{ user.get_username }}.
     <a href="{% url 'password_change' %}">Alterar senha</a> /
-    <a href="{% url 'logout' %}">Encerrar sessão</a>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" style="background:none;border:none;color:#0d6efd;cursor:pointer;padding:0;">
+            Encerrar sessão
+        </button>
+    </form>
   </div>
 {% endif %}
+
 
 <div class="text-center">
     <h2>Olá, {{ aluno.nome }}</h2>
