@@ -5,9 +5,8 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-  <div style="margin-bottom: 20px;">
+  <div class="text-end mb-3">
     Bem-vindo(a), {{ user.get_username }}.
-    <a href="/">Ver o site</a> /
     <a href="{% url 'password_change' %}">Alterar senha</a> /
     <a href="{% url 'logout' %}">Encerrar sessão</a>
   </div>
