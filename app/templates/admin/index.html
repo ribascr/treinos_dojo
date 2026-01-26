@@ -1,14 +1,17 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
 
-{% block sidebar %}
+{% block content %}
     {{ block.super }}
 
-    {% if user.is_authenticated %}
-        <div class="module">
-            <h3>Relatórios</h3>
-            <ul>
-                <li><a href="{% url 'admin-relatorios' %}">Ver Relatórios</a></li>
-            </ul>
-        </div>
-    {% endif %}
+    <div class="dashboard-module">
+        <h2>Relatórios do Dojo</h2>
+        <ul>
+            <li><a href="{% url 'admin-relatorios' %}">Ver Relatórios</a></li>
+            <li><a href="{% url 'relatorio-assiduidade' %}">Ranking de Assiduidade</a></li>
+            <li><a href="{% url 'relatorio-horas-treinadas' %}">Horas Treinadas por Aluno</a></li>
+            <li><a href="{% url 'relatorio-alunos-faixa' %}">Quantidade de Alunos por Faixa</a></li>
+            <li><a href="{% url 'relatorio-lista-faixas' %}">Lista de Alunos e Suas Faixas</a></li>
+        </ul>
+    </div>
 {% endblock %}
