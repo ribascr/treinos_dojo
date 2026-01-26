@@ -31,17 +31,44 @@
                             </div>
                         {% endif %}
 
-                        <form method="post">
+                        <form method="post" autocomplete="on">
                             {% csrf_token %}
 
                             <div class="mb-3">
                                 <label class="form-label">Usuário</label>
-                                {{ form.username }}
+                                <input 
+                                    type="text" 
+                                    name="username" 
+                                    class="form-control"
+                                    id="id_username"
+                                    autocomplete="username"
+                                    required
+                                >
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Senha</label>
-                                {{ form.password }}
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    class="form-control"
+                                    id="id_password"
+                                    autocomplete="current-password"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Checkbox Lembrar-me -->
+                            <div class="form-check mb-3">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    name="remember_me" 
+                                    id="remember_me"
+                                >
+                                <label class="form-check-label" for="remember_me">
+                                    Lembrar-me
+                                </label>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">

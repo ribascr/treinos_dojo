@@ -28,11 +28,32 @@ from .serializers import (
 
 class MeuLoginView(LoginView):
     template_name = 'accounts/login.html'
+
+    def form_valid(self, form):
+        """
+        Controla o tempo da sessão dependendo do checkbox 'remember_me'.
+        """
+        remember = self.request.POST.get("remember_me")
+
+        if not remember:
+            # Sessão expira ao fechar o navegador
+            self.request.session.set_expiry(0)
+        else:
+            # Sessão dura 30 dias
+            self.request.session.set_expiry(60 * 60 * 24 * 30)
+
+        return super().form_valid(form)
+
     def get_success_url(self):
+        """
+        Redireciona o usuário para a página do aluno, se existir.
+        """
         user = self.request.user
         aluno = Aluno.objects.filter(user=user).first()
+
         if aluno:
             return f'/aluno/{aluno.id}/'
+
         return '/'
 
 
