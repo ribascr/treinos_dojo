@@ -27,6 +27,7 @@ from .serializers import (
 )
 
 class MeuLoginView(LoginView):
+    template_name = 'accounts/login.html'
     def get_success_url(self):
         user = self.request.user
         aluno = Aluno.objects.filter(user=user).first()
